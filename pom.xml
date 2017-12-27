@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ge.predix.insights</groupId>
+    <artifactId>spark-streaming-event-hub-assembly</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <slf4jVersion>1.6.1</slf4jVersion>
+        <eventhub.java.sdk.version>1.2.1-SPARK</eventhub.java.sdk.version>
+        <fasterxml.jackson.core.version>2.8.4</fasterxml.jackson.core.version>
+        <spark.version>2.1.0</spark.version>
+        <aws.java.sdk.version>1.10.77</aws.java.sdk.version> <!-- 1.10.77 -->
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-tcnative-boringssl-static</artifactId>
+            <version>1.1.33.Fork23</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ge.predix.eventhub</groupId>
+            <artifactId>predix-event-hub-sdk</artifactId>
+            <version>${eventhub.java.sdk.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+            <version>${spark.version}</version>
+            <exclusions>
+			    <exclusion>			      
+			      <groupId>com.google.guava</groupId>
+			      <artifactId>guava</artifactId>
+			    </exclusion>
+			</exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>19.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.razorvine</groupId>
+			<artifactId>pyrolite</artifactId>
+			<version>4.20</version>
+		</dependency>
+
+        <!-- aws -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- junit -->
+        <dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+		  <version>4.11</version>
+		  <scope>test</scope>
+		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.mortbay.jetty.alpn/alpn-boot -->
+        <dependency>
+            <groupId>org.mortbay.jetty.alpn</groupId>
+            <artifactId>alpn-boot</artifactId>
+            <version>8.1.9.v20160720</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.4.1.Final</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                	<source>1.8</source>
+                    <target>1.8</target>
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>fat</shadedClassifierName>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.google</pattern>
+                            <shadedPattern>shaded.guava</shadedPattern>
+                            <includes>
+                                <include>com.google.**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>com.google.common.base.Optional</exclude>
+                                <exclude>com.google.common.base.Absent</exclude>
+                                <exclude>com.google.common.base.Present</exclude>
+                            </excludes>
+                        </relocation>
+                    </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>assemble-all</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>false</minimizeJar>
+                            <shadeSourcesContent>true</shadeSourcesContent>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin> 
+            
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>netty-repo-2</id>
+            <url>http://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>org.mortbay.jetty.alpn</id>
+            <name>alpn-root</name>
+            <url>https://mvnrepository.com/artifact/org.mortbay.jetty.alpn/alpn-boot</url>
+        </repository>
+        <repository>
+            <id>artifactory.snapshots</id>
+            <name>artifactory.snapshots</name>
+            <url>https://devcloud.swcoe.ge.com/artifactory/PREDIX-SNAPSHOT</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>osssonatype</id>
+            <name>OSS Sonatype</name>
+            <url>https://repo1.maven.org/maven2/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+</project>

@@ -1,0 +1,23 @@
+
+
+submit the jar with dependency
+--with all dependency
+spark-submit --jars lib/netty-tcnative-boringssl-static-1.1.33.Fork23.jar,lib/predix-event-hub-sdk-1.2.1-SPARK.jar,lib/grpc-protobuf-1.0.0.jar,lib/guava-19.0.jar,lib/grpc-protobuf-lite-1.0.0.jar,lib/protobuf-java-3.0.0.jar,lib/protobuf-java-util-3.0.0.jar  --class com.ge.predix.predixinsights.test.EventHubReceiverTest spark-streaming-event-hub-assembly-1.0-SNAPSHOT.jar 
+--with neccessary dependency
+spark-submit --jars lib/netty-tcnative-boringssl-static-1.1.33.Fork23.jar,lib/predix-event-hub-sdk-1.2.1-SPARK.jar,lib/grpc-protobuf-1.0.0.jar,lib/guava-19.0.jar,lib/grpc-protobuf-lite-1.0.0.jar,lib/protobuf-java-util-3.0.0.jar  --class com.ge.predix.predixinsights.test.EventHubReceiverTest spark-streaming-event-hub-assembly-1.0-SNAPSHOT.jar
+--finally dependency
+spark-submit --jars lib/netty-tcnative-boringssl-static-1.1.33.Fork23.jar,lib/predix-event-hub-sdk-1.2.1-SPARK.jar,lib/grpc-protobuf-1.0.0.jar  --class com.ge.predix.predixinsights.test.EventHubReceiverTest spark-streaming-event-hub-assembly-1.0-SNAPSHOT.jar
+spark-submit --jars lib/predix-event-hub-sdk-1.2.1-SPARK.jar  --class com.ge.predix.predixinsights.test.EventHubReceiverTest spark-streaming-event-hub-assembly-1.0-SNAPSHOT.jar
+
+
+
+spark-submit --jars /Users/502677522/Software/BigData/hadoop-2.7.4/share/hadoop/tools/lib/hadoop-aws-2.7.4.jar,/Users/502677522/Software/BigData/hadoop-2.7.4/share/hadoop/tools/lib/hadoop-auth-2.7.4.jar,/Users/502677522/Software/BigData/hadoop-2.7.4/share/hadoop/tools/lib/aws-java-sdk-1.7.4.jar,spark-streaming-event-hub-assembly-1.0-SNAPSHOT-fat.jar eventhub-processing-v4.py 
+
+
+spark-submit --jars /Users/502677522/Software/BigData/hadoop-2.7.4/share/hadoop/tools/lib/hadoop-aws-2.7.4.jar,/Users/502677522/Software/BigData/hadoop-2.7.4/share/hadoop/tools/lib/aws-java-sdk-1.7.4.jar,spark-streaming-event-hub-assembly-1.0-SNAPSHOT-fat.jar eventhub-processing-v4.py
+
+
+spark-submit --jars lib/predix-event-hub-sdk-1.2.1-SPARK.jar  --class com.ge.predix.predix.insights.integration.EventHubReceiverTest spark-streaming-event-hub-assembly-1.0-SNAPSHOT.jar
+
+
+spark-submit --jars spark-streaming-event-hub-assembly-1.0-SNAPSHOT-fat.jar eventhub-processing-v4.py

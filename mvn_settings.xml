@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <proxies>
+
+        <proxy>
+            <active>true</active>
+            <protocol>http</protocol>
+            <host>sjc1intproxy01.crd.ge.com</host>
+            <port>8080</port>
+            <nonProxyHosts>repo.jenkins.build.ge.com|sjc1ssadsp01.crd.ge.com|ge.com|localhost|home</nonProxyHosts>
+        </proxy>
+        <proxy>
+            <active>true</active>
+            <protocol>https</protocol>
+            <host>sjc1intproxy01.crd.ge.com</host>
+            <port>8080</port>
+            <nonProxyHosts>repo.jenkins.build.ge.com|sjc1ssadsp01.crd.ge.com|ge.com|localhost|home</nonProxyHosts>
+        </proxy>
+    </proxies>
+
+    <profiles>
+        <profile>
+            <repositories>
+
+                <repository>
+                    <id>PROJECT-remote</id>
+                    <name>PROJECT-remote</name>
+                    <url>https://repo.jenkins.build.ge.com/artifactory/PROJECT-remote/</url>
+                </repository>
+
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <name>libs-release</name>
+                    <url>https://repo.jenkins.build.ge.com/artifactory/libs-release/</url>
+                </repository>
+                <repository>
+                    <snapshots />
+                    <id>snapshots</id>
+                    <name>libs-snapshot</name>
+                    <url>https://repo.jenkins.build.ge.com/artifactory/libs-snapshot/</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <name>plugins-release</name>
+                    <url>https://repo.jenkins.build.ge.com/artifactory/plugins-release/</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <snapshots />
+                    <id>snapshots</id>
+                    <name>plugins-snapshot</name>
+                    <url>https://repo.jenkins.build.ge.com/artifactory/plugins-snapshot/</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <id>artifactory</id>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>artifactory</activeProfile>
+    </activeProfiles>
+</settings>
